@@ -1,0 +1,24 @@
+{
+  "name": "weatherflow",
+  "version": "0.1.0",
+  "description": "An app that gathers weather data for the user",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/braden337/weatherflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/braden337/weatherflow/issues"
+  },
+  "homepage": "https://github.com/braden337/weatherflow#readme",
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "jest": "^22.4.0",
+    "sequelize": "^4.33.4",
+    "sqlite3": "^3.1.13"
+  }
+}
