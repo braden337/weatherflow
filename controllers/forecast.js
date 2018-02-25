@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 // request handling for /forecast
-router.get("/", getHandler);
-router.post("/", postHandler);
+router.get("/", retrieveSavedForecasts);
+router.post("/", fetchForecast);
 
 function retrieveSavedForecasts(req, res) {
   res.send("weather");
@@ -12,7 +12,7 @@ function retrieveSavedForecasts(req, res) {
 function fetchForecast(req, res) {
   res.json({ greeting: "Hello" });
   // this should return the forecast for the city
-  // after it 
+  // after it
 }
 
 module.exports = { router, retrieveSavedForecasts, fetchForecast };
