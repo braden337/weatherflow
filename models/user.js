@@ -20,6 +20,7 @@ class User {
     });
   }
 
+  // saves a new user
   save() {
     return new Promise((resolve, reject) => {
       knex("users")
@@ -32,17 +33,18 @@ class User {
     });
   }
 
+  // gets the forecasts that belong to a user
   forecasts() {
-    return new Promise((resolve, reject) => {
-      // const idQuery = knex('users').select('id').where({ uuid: this.uuid})
+    return new Promise(resolve => {
       knex("forecasts")
         .select("city", "low", "high", "pop")
         .where("user_id", this.id)
-        .then(resolve) // array of forecasts
-        .catch(_ => reject(new Error("could not fetch forecasts")));
+        .then(resolve);
+      // array of forecasts
     });
   }
 
+  // adds a forecast that belongs to a user
   addForecast(forecast) {
     return new Promise((resolve, reject) => {
       knex("forecasts")
@@ -54,7 +56,8 @@ class User {
           created_at: new Date(),
           user_id: forecast.user_id
         })
-        .then(result => resolve(result[0])) // resolve id number of new forecast
+        .then(result => resolve(result[0]))
+        // resolve id number of new forecast
         .catch(e => reject(new Error("unable to add the new forecast")));
     });
   }

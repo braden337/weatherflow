@@ -11,6 +11,8 @@ function retrieveSavedForecasts(req, res) {
 
 function fetchForecast(req, res) {
   res.json({ greeting: "Hello" });
+  // this should return the forecast for the city
+  // after it 
 }
 
 module.exports = { router, retrieveSavedForecasts, fetchForecast };

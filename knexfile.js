@@ -3,11 +3,14 @@ const knex = require("knex");
 const development = (test = {
   client: "sqlite3",
   connection: {
-    filename: `${__dirname}/dev.sqlite3`
+    filename: `${__dirname}/db/dev.sqlite3`
   },
   useNullAsDefault: true,
+  migrations: {
+    directory: `${__dirname}/db/migrations`
+  },
   seeds: {
-    directory: `${__dirname}/seeds`
+    directory: `${__dirname}/db/seeds`
   }
 });
 
@@ -17,6 +20,12 @@ const production = {
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASS
+  },
+  migrations: {
+    directory: `${__dirname}/db/migrations`
+  },
+  seeds: {
+    directory: `${__dirname}/db/seeds`
   }
 };
 
