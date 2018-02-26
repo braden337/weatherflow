@@ -9,7 +9,8 @@ exports.seed = function(knex, Promise) {
       return knex("users").insert([
         { uuid: "mitch-hedberg" },
         { uuid: "jimi-hendrix" },
-        { uuid: "chris-farley" }
+        { uuid: "chris-farley" },
+        { uuid: "larry-david" }
       ]);
     });
 };

@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "nodemon app.js",
     "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run",
-    "db": "sqlite3 dev.sqlite3",
+    "db": "sqlite3 db/dev.sqlite3",
     "watch": "npm run clean && jest --watch",
     "postinstall": "knex migrate:latest && knex seed:run"
   },
@@ -29,6 +29,7 @@
     "express": "^4.16.2",
     "knex": "^0.14.4",
     "mysql": "^2.15.0",
+    "node-fetch": "^2.0.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {

@@ -27,7 +27,7 @@ class User {
         .insert({ uuid: this.uuid })
         .then(result => {
           this.id = result[0];
-          resolve({ id: this.id, uuid: this.uuid });
+          resolve();
         })
         .catch(_ => reject(new Error("user already exists")));
     });
@@ -35,11 +35,12 @@ class User {
 
   // gets the forecasts that belong to a user
   forecasts() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       knex("forecasts")
-        .select("city", "low", "high", "pop")
+        .select("city", "low", "high", "pop", "created_at")
         .where("user_id", this.id)
-        .then(resolve);
+        .then(resolve)
+        .catch();
       // array of forecasts
     });
   }
@@ -48,15 +49,15 @@ class User {
   addForecast(forecast) {
     return new Promise((resolve, reject) => {
       knex("forecasts")
-        .insert({
-          city: forecast.city,
-          low: forecast.low,
-          high: forecast.high,
-          pop: forecast.pop,
-          created_at: new Date(),
-          user_id: forecast.user_id
+        .insert(forecast)
+        .then(result => result[0])
+        .then(id => {
+          if (id) {
+            delete forecast.user_id;
+            resolve(forecast);
+          }
         })
-        .then(result => resolve(result[0]))
+        // .then(result => resolve(result[0]))
         // resolve id number of new forecast
         .catch(e => reject(new Error("unable to add the new forecast")));
     });
