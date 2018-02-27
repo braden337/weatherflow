@@ -12,3 +12,7 @@ A web app that fetches and stores weather forecasts. The server-side uses
 
 Wherever you deploy this app, make sure that you set an environment variable
 called `WUNDERGROUND_API_KEY` with your key for the [Wunderground API](https://www.wunderground.com/weather/api/d/docs).
+
+### Screenshots
+
+![weatherflow client-side user interface](https://raw.githubusercontent.com/braden337/weatherflow/master/public/weatherflow.png)
