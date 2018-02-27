@@ -24,6 +24,7 @@ class User {
   save() {
     return new Promise((resolve, reject) => {
       knex("users")
+        .returning("id")
         .insert({ uuid: this.uuid })
         .then(result => {
           this.id = result[0];
@@ -49,6 +50,7 @@ class User {
   addForecast(forecast) {
     return new Promise((resolve, reject) => {
       knex("forecasts")
+        .returning("id")
         .insert(forecast)
         .then(result => result[0])
         .then(id => {
