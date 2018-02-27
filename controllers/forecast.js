@@ -37,7 +37,7 @@ class Forecast {
             .then(forecast => {
               Object.assign(forecast, {
                 user_id: user.id,
-                created_at: Date.now()
+                created_at: new Date().toISOString()
               });
               user
                 .addForecast(forecast)
@@ -66,7 +66,7 @@ class Forecast {
           .then(forecast => {
             res.cookie("uuid", user.uuid, {
               httpOnly: true,
-              secure: true,
+              secure: false,
               expires: new Date(Date.now() + 10 * 365 * 8.64e7)
               // there are 8.64e7 milliseconds in one day
               // this cookie will expire ten years from now
