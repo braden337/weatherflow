@@ -16,7 +16,8 @@ it("Returns the correct number of forecasts that belong to a user as JSON", () =
 
   return expect(
     Forecast.getSavedForecasts(req, res).then(_ => JSON.parse(res._getData()))
-  ).resolves.toHaveLength(3); // hedberg has 3 forecasts
+  ).resolves.toHaveLength(3);
+  // hedberg has three forecasts
 });
 
 it("Returns JSON error message if no city is provided", () => {
@@ -38,7 +39,7 @@ it("Returns JSON error message if no city is provided", () => {
   ).resolves.toMatch(/Must provide a city/);
 });
 
-it("Returns JSON error message if the provided city does not exist", () => {
+it("Returns JSON error message if the provided city name can't be found", () => {
   expect.assertions(1);
 
   let req = httpMocks.createRequest({

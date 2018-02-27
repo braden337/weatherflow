@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
       table.float("low").notNullable();
       table.float("high").notNullable();
       table.float("pop").notNullable();
-      table.timestamp("created_at");
+      table.timestamp("created_at").notNullable();
       table
         .integer("user_id")
         .references("users.id")

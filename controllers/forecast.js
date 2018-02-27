@@ -66,7 +66,7 @@ class Forecast {
           .then(forecast => {
             res.cookie("uuid", user.uuid, {
               httpOnly: true,
-              secure: false,
+              secure: true,
               expires: new Date(Date.now() + 10 * 365 * 8.64e7)
               // there are 8.64e7 milliseconds in one day
               // this cookie will expire ten years from now
@@ -127,5 +127,3 @@ router.get("/", Forecast.getSavedForecasts);
 router.post("/", Forecast.lookUpCity);
 
 module.exports = { router, Forecast };
-
-// to use cookies with the fetch API, use {credentials: 'include'}

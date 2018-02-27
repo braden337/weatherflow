@@ -1,28 +1,12 @@
-console.log("weatherflow");
-
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sept",
-  "Oct",
-  "Nov",
-  "Dec"
-];
-
+// Helper functions
 const kelvin = t => t;
 const celsius = t => t - 273.15;
 const farenheit = t => Math.round(celsius(t) * 9 / 5 + 32, 2);
+const dashify = x => (x == -1 ? "--" : x);
 
 const temperatureFunctions = { kelvin, celsius, farenheit };
 
-const dashify = x => (x == -1 ? "--" : x);
-
+// Vue instance
 var app = new Vue({
   el: "#app",
   data: {
@@ -81,7 +65,7 @@ var app = new Vue({
             if (!data.error) {
               this.forecasts.push(data);
             } else {
-              console.log(data.error);
+              console.error(data.error);
             }
           });
       }

@@ -16,7 +16,7 @@ class User {
           this.id = result[0].id;
           resolve();
         })
-        .catch(_ => reject(new Error(`user ${this.uuid} does not exist`)));
+        .catch(_ => reject(new Error(`User ${this.uuid} does not exist`)));
     });
   }
 
@@ -24,13 +24,12 @@ class User {
   save() {
     return new Promise((resolve, reject) => {
       knex("users")
-        .returning("id")
         .insert({ uuid: this.uuid })
         .then(result => {
           this.id = result[0];
           resolve();
         })
-        .catch(_ => reject(new Error("user already exists")));
+        .catch(_ => reject(new Error("User already exists")));
     });
   }
 
@@ -42,7 +41,7 @@ class User {
         .where("user_id", this.id)
         .then(resolve)
         .catch();
-      // array of forecasts
+      // resolves an array of forecasts
     });
   }
 
@@ -50,7 +49,6 @@ class User {
   addForecast(forecast) {
     return new Promise((resolve, reject) => {
       knex("forecasts")
-        .returning("id")
         .insert(forecast)
         .then(result => result[0])
         .then(id => {
@@ -59,8 +57,6 @@ class User {
             resolve(forecast);
           }
         })
-        // .then(result => resolve(result[0]))
-        // resolve id number of new forecast
         .catch(e => reject(new Error("Unable to add the new forecast")));
     });
   }

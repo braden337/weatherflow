@@ -11,7 +11,7 @@ const farley = {
   high: -7,
   pop: 0
 };
-// hedberg has 3 forecasts, hendrix and farley don't have any
+// hedberg has three forecasts, hendrix and farley don't have any
 
 it("Creates new user and sets uuid and id on the user instance", () => {
   expect.assertions(2);
@@ -29,7 +29,7 @@ it("Throws error when you try to save a user that already exists", () => {
 
   let user = new User(hedberg.uuid);
 
-  return expect(user.save()).rejects.toThrow(/user already exists/);
+  return expect(user.save()).rejects.toThrow(/User already exists/);
 });
 
 it("Fetches the users forecasts", () => {
@@ -72,11 +72,11 @@ it("Throws error if the user does not exist", () => {
   let user = new User("ryan-villopoto");
 
   return expect(user.initialize().then(_ => user.forecasts())).rejects.toThrow(
-    /user ryan-villopoto does not exist/
+    /User ryan-villopoto does not exist/
   );
 });
 
-it("Sets the id as an instance variable", () => {
+it("Sets the id as an instance variable of a User", () => {
   expect.assertions(1);
 
   let user = new User(farley.uuid);

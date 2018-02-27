@@ -10,7 +10,7 @@ exports.seed = function(knex, Promise) {
           low: 2,
           high: 10,
           pop: 15,
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           user_id: 1
         },
         {
@@ -18,7 +18,7 @@ exports.seed = function(knex, Promise) {
           low: 7,
           high: 12,
           pop: 0,
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           user_id: 1
         },
         {
@@ -26,7 +26,7 @@ exports.seed = function(knex, Promise) {
           low: 1,
           high: -5,
           pop: 70,
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           user_id: 1
         }
       ]);

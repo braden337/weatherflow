@@ -14,6 +14,6 @@ const forecast = require("./controllers/forecast");
 
 app.use("/forecast", forecast.router);
 
-app.listen(process.env.PORT, process.env.IP, function() {
+app.listen(process.env.PORT || 3000, process.env.IP, function() {
   console.log("Weatherflow is listening for http requests 🌩🌩🌩️️️");
 });

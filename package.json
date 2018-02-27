@@ -4,15 +4,16 @@
   "description": "An app that gathers weather data for the user",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "npm run clean && jest",
     "start": "nodemon app.js",
-    "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run",
-    "db": "sqlite3 db/dev.sqlite3",
     "watch": "npm run clean && jest --watch",
+    "db": "sqlite3 db/dev.sqlite3",
+    "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+    "rollback": "knex migrate:rollback",
     "postinstall": "knex migrate:latest"
   },
   "engines": {
-    "node": "^9.6.1"
+    "node": "9.x"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
-    "dotenv": "^5.0.0",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "knex": "^0.14.4",
     "node-fetch": "^2.0.0",
