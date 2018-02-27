@@ -12,11 +12,11 @@ exports.up = function(knex, Promise) {
   function createForecastsTable() {
     return knex.schema.createTable("forecasts", function(table) {
       table.increments("id").primary();
-      table.string("city").notNullable();
-      table.float("low").notNullable();
-      table.float("high").notNullable();
-      table.float("pop").notNullable();
-      table.timestamp("created_at").notNullable();
+      table.string("city");
+      table.float("low");
+      table.float("high");
+      table.float("pop");
+      table.timestamp("created_at");
       table
         .integer("user_id")
         .references("users.id")

@@ -49,6 +49,8 @@ class Forecast {
       }
 
       if (uuid && city) {
+        // if there's a uuid cookie and city in the POST body
+        // we'll add a forecast for that existing user
         user = new User(uuid);
         user
           .initialize()
@@ -59,6 +61,8 @@ class Forecast {
             resolve(res.json({}));
           });
       } else if (!uuid && city) {
+        // if it's a new user making a POST
+        // then set a uuid cookie for them
         user = new User();
         user
           .save()
