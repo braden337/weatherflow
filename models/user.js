@@ -61,7 +61,7 @@ class User {
         })
         // .then(result => resolve(result[0]))
         // resolve id number of new forecast
-        .catch(e => reject(new Error("unable to add the new forecast")));
+        .catch(e => reject(new Error("Unable to add the new forecast")));
     });
   }
 }
