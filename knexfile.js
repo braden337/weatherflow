@@ -15,12 +15,8 @@ const development = (test = {
 });
 
 const production = {
-  client: "mysql",
-  connection: {
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS
-  },
+  client: "pg",
+  connection: process.env.DATABASE_URL,
   migrations: {
     directory: `${__dirname}/db/migrations`
   },

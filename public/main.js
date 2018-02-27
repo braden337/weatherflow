@@ -44,7 +44,7 @@ var app = new Vue({
       return Array.from(this.forecasts).reverse();
     },
     units: function() {
-      let degree_symbol = this.temperature_units != "kelvin" ? "°" : "";
+      let degree_symbol = this.temperature_units != "kelvin" ? "°" : " ";
       return degree_symbol + this.temperature_units.toUpperCase()[0];
     }
   },
