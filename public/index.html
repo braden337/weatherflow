@@ -87,8 +87,8 @@
             <tbody>
               <tr v-for="forecast in descendingForecasts">
                 <td>{{ forecast.city }}</td>
-                <td class="num-col">{{ convertTemperature(forecast.low) }} {{ units }}</td>
-                <td class="num-col">{{ convertTemperature(forecast.high) }} {{ units }}</td>
+                <td class="num-col">{{ convertTemperature(forecast.low) }}{{ units }}</td>
+                <td class="num-col">{{ convertTemperature(forecast.high) }}{{ units }}</td>
                 <td class="num-col">{{ forecast.pop | percentage }}</td>
                 <td class="date-col">{{ forecast.created_at | date }}</td>
               </tr>
