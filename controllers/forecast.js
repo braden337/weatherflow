@@ -66,6 +66,7 @@ class Forecast {
           .then(forecast => {
             res.cookie("uuid", user.uuid, {
               httpOnly: true,
+              secure: true,
               expires: new Date(Date.now() + 10 * 365 * 8.64e7)
               // there are 8.64e7 milliseconds in one day
               // this cookie will expire ten years from now
