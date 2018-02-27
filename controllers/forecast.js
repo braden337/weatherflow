@@ -37,7 +37,7 @@ class Forecast {
             .then(forecast => {
               Object.assign(forecast, {
                 user_id: user.id,
-                created_at: new Date().valueOf()
+                created_at: Date.now()
               });
               user
                 .addForecast(forecast)
@@ -64,7 +64,12 @@ class Forecast {
           .save()
           .then(_ => fetchAndSaveForecast())
           .then(forecast => {
-            res.cookie("uuid", user.uuid);
+            res.cookie("uuid", user.uuid, {
+              httpOnly: true,
+              expires: new Date(Date.now() + 10 * 365 * 8.64e7)
+              // there are 8.64e7 milliseconds in one day
+              // this cookie will expire ten years from now
+            });
             resolve(res.json(forecast));
           })
           .catch(e => resolve(res.json({ error: e.message })));
@@ -90,9 +95,9 @@ class Forecast {
             let forecast = data.forecast.simpleforecast.forecastday[0];
             resolve({
               city,
-              low: kelvin(forecast.low.celsius),
-              high: kelvin(forecast.high.celsius),
-              pop: forecast.pop
+              low: kelvin(forecast.low.celsius) || -1,
+              high: kelvin(forecast.high.celsius) || -1,
+              pop: typeof forecast.pop == "number" ? forecast.pop : -1
             });
           } else if (data.response.results) {
             citySearch(

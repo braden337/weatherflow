@@ -96,7 +96,7 @@ it("Creates a forecast for a user", () => {
     user.initialize().then(_ =>
       user.addForecast(
         Object.assign(farley, {
-          created_at: new Date(),
+          created_at: Date.now(),
           user_id: user.id
         })
       )

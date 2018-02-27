@@ -1,3 +1,23 @@
 body {
-  background-color: lightcyan;
+  background-color: var(--light);
+}
+
+.num-col {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.date-col {
+  text-align: right;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .ui-col + .ui-col {
+    margin-top: 1rem;
+  }
 }
