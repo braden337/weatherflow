@@ -10,23 +10,17 @@ class User {
     this.uuid = uuid;
     this.id = null;
   }
-
+  async exists() {
+    
+  }
   async init() {
     if (this.uuid) {
-      try {
-        let id = await this[getUserId]();
-        if (id) {
-          this.id = id;
-          return this;
-        } else {
-          throw new Error("User doesn't exist, can't get any forecasts");
-        }
-      } catch (e) {
-        return new Error(
-          `THIS ERROR WAS THROWN BY user.getUserID() BEING CALLED IN user.init()!\n\n${
-            e.message
-          }`
-        );
+      let id = await this[getUserId]();
+      if (id) {
+        this.id = id;
+        return this;
+      } else {
+        throw null;
       }
     } else {
       this.uuid = uuidv4();
@@ -34,24 +28,25 @@ class User {
         this.id = await this[save]();
         return this;
       } catch (e) {
-        return new Error(
-          `THIS ERROR WAS THROWN BY user.save() BEING CALLED IN user.init()!\n\n${
-            e.message
-          }`
-        );
+        console.log(e);
       }
     }
   }
 
+  async init() {
+    if (this.uuid) {
+    }
+  }
+
   async [getUserId]() {
-    try {
-      let user = await knex("users")
-        .select("id")
-        .where({ uuid: this.uuid })
-        .first();
-      return user.id || null;
-    } catch (e) {
-      return new Error(e.message);
+    let results = await knex("users")
+      .select("id")
+      .where({ uuid: this.uuid });
+
+    if (results.length) {
+      return results[0].id;
+    } else {
+      return 0;
     }
   }
 

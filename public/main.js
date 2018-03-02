@@ -75,6 +75,8 @@ var app = new Vue({
         body: JSON.stringify({ prediction: this.cities[whichCity] })
       });
 
+      this.cities = []
+
       let place = await (await fetch("/coordinates", FETCH_OPTIONS)).json();
 
       console.log(place);
