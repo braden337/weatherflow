@@ -7,26 +7,23 @@ exports.seed = function(knex, Promise) {
       return knex("forecasts").insert([
         {
           city: "Saint Paul, Minnesota",
-          low: 2,
-          high: 10,
+          low: 275.15,
+          high: 283.15,
           pop: 15,
-          created_at: new Date().toISOString(),
           user_id: 1
         },
         {
           city: "Ontario, California",
-          low: 7,
-          high: 12,
+          low: 280.15,
+          high: 285.15,
           pop: 0,
-          created_at: new Date().toISOString(),
           user_id: 1
         },
         {
           city: "Montreal, Canada",
-          low: 1,
-          high: -5,
+          low: 274.15,
+          high: 268.15,
           pop: 70,
-          created_at: new Date().toISOString(),
           user_id: 1
         }
       ]);

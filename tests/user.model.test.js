@@ -13,6 +13,11 @@ const farley = {
 };
 // hedberg has three forecasts, hendrix and farley don't have any
 
+afterAll(() => {
+  User.destroyKnex();
+});
+
+
 it("Creates new user and sets uuid and id on the user instance", () => {
   expect.assertions(2);
 
@@ -96,7 +101,6 @@ it("Creates a forecast for a user", () => {
     user.initialize().then(_ =>
       user.addForecast(
         Object.assign(farley, {
-          created_at: Date.now(),
           user_id: user.id
         })
       )

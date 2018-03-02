@@ -3,6 +3,11 @@ require("dotenv").config({ path: `${__dirname}/../.env` });
 const httpMocks = require("node-mocks-http");
 const Forecast = require("../controllers/forecast").Forecast;
 
+afterAll(() => {
+  Forecast.destroyKnex();
+});
+
+
 it("Returns the correct number of forecasts that belong to a user as JSON", () => {
   expect.assertions(1);
 

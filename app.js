@@ -6,13 +6,20 @@ const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-app.use(express.static("public"));
+if (!process.env.NODE_ENV) {
+  app.use(express.static("public"));
+}
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const forecast = require("./controllers/forecast");
+const forecasts = require("./controllers/forecasts");
+const cities = require("./controllers/cities");
+const coordinates = require("./controllers/coordinates");
 
-app.use("/forecast", forecast.router);
+app.use("/forecasts", forecasts.router);
+app.use("/cities", cities.router);
+app.use("/coordinates", coordinates.router);
 
 app.listen(process.env.PORT || 3000, process.env.IP, function() {
   console.log("Weatherflow is listening for http requests 🌩🌩🌩️️️");

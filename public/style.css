@@ -17,7 +17,22 @@ body {
 }
 
 @media (max-width: 768px) {
-  .ui-col + .ui-col {
+  .ui-col+.ui-col {
     margin-top: 1rem;
   }
+}
+
+#city {
+  flex: 1;
+}
+
+.truncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+}
+
+ul {
+  margin-bottom: 0;
 }

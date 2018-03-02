@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   function createUsersTable() {
     return knex.schema.createTable("users", function(table) {
-      table.increments("id").primary();
+      table.increments().primary();
       table
         .string("uuid")
         .unique()
@@ -17,10 +17,8 @@ exports.up = function(knex, Promise) {
       table.float("high");
       table.float("pop");
       table.timestamp("created_at");
-      table
-        .integer("user_id")
-        .references("users.id")
-        .notNullable();
+      table.integer("user_id").unsigned().notNullable();  // .references("users.id")
+      table.foreign("user_id").references('id').inTable('users');
     });
   }
 
