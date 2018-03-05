@@ -1,15 +1,19 @@
 {
   "name": "weatherflow",
   "version": "0.1.0",
-  "description": "An app that gathers weather data for the user",
+  "description": "An app that fetches and stores weather forecasts for the user.",
   "main": "app.js",
   "scripts": {
     "test": "npm run clean && jest",
     "start": "nodemon app.js",
-    "watch": "npm run clean && jest --watch",
     "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run",
     "rollback": "knex migrate:rollback",
     "postinstall": "knex migrate:latest"
+  },
+  "jest": {
+    "roots": [
+      "tests"
+    ]
   },
   "engines": {
     "node": "9.x"
@@ -29,14 +33,12 @@
     "express": "^4.16.2",
     "knex": "^0.14.4",
     "mysql": "^2.15.0",
-    "node-fetch": "^2.0.0",
-    "pg": "^7.4.1",
+    "node-fetch": "^2.1.1",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "jest": "^22.4.0",
+    "jest": "^22.4.2",
     "node-mocks-http": "^1.6.7",
-    "nodemon": "^1.15.1",
-    "sqlite3": "^3.1.13"
+    "nodemon": "^1.17.1"
   }
 }

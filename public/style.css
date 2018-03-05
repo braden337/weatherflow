@@ -2,6 +2,11 @@ body {
   background-color: var(--light);
 }
 
+header {
+  background-color: var(--red);
+  color: var(--light);
+}
+
 .num-col {
   white-space: nowrap;
   text-align: center;
@@ -16,23 +21,25 @@ body {
   vertical-align: middle;
 }
 
-@media (max-width: 768px) {
-  .ui-col+.ui-col {
-    margin-top: 1rem;
-  }
-}
+/*@media (max-width: 768px) {
+  */
 
-#city {
+/*  .ui-col+.ui-col {*/
+
+/*    margin-top: 1rem;*/
+
+/*  }*/
+
+/*}*/
+
+#city,
+#temperatureRadio>label {
   flex: 1;
 }
 
-.truncate {
+#truncate {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   display: block;
-}
-
-ul {
-  margin-bottom: 0;
 }

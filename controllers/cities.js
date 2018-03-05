@@ -1,16 +1,19 @@
 const Endpoint = require(`${__dirname}/../utilities/Endpoint`);
 const router = require("express").Router();
 
-async function fetchCityPredictions(req, res) {
-  try {
-    let predictions = await Endpoint.placesAutocomplete(req.body.city);
-    return res.json({ predictions });
-  } catch (e) {
-    return res.json({ error: e.message });
+async function postCityInput(req, res) {
+  let result;
+  let predictions = await Endpoint.placesAutocomplete(req.body.city);
+
+  if (predictions instanceof Error) {
+    result = { error: predictions.message };
+  } else {
+    result = { predictions };
   }
+  return res.json(result);
 }
 
 // request handling for /cities
-router.post("/", fetchCityPredictions);
+router.post("/", postCityInput);
 
-module.exports = { router, fetchCityPredictions };
+module.exports = { router, postCityInput };

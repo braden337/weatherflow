@@ -1,53 +1,79 @@
-/* global Vue fetch moment */
 // Helper functions
-const kelvin = t => t;
-const celsius = t => t - 273.15;
-const fahrenheit = t => celsius(t) * 9 / 5 + 32;
-const dashify = x => (x == -1 ? "--" : x);
 const roundHundredths = x => Math.round(x * 100) / 100;
+
+const kelvin = t => roundHundredths(t);
+const celsius = t => roundHundredths(t - 273.15);
+const fahrenheit = t => roundHundredths(celsius(t) * 9 / 5 + 32);
+
+// if a temperature was missing from the forecast API,
+// it will be -1 and we will fill it with dashes
+const dashify = x => (x == -1 ? "--" : x);
 
 const temperatureFunctions = { kelvin, celsius, fahrenheit };
 
-// Global variables
-const FETCH_OPTIONS = {
+// fetch options
+const HEADERS = {
   headers: {
     "content-type": "application/json"
-  },
+  }
+};
+
+const CREDENTIALS = {
   credentials: "same-origin"
 };
 
-let cityInput;
+const POST = {
+  method: "POST"
+};
 
 // Vue instance
 var app = new Vue({
   el: "#app",
-  error: "",
   data: {
     city: "",
-    temperature_units: "celsius",
+    temperature_units:
+      window.localStorage.getItem("temperature_units") || "celsius",
     forecasts: [],
-    cities: []
+    predictions: [],
+    error: "",
+    cityInput: null
   },
   created: function() {
-    fetch("/forecasts", {
-      credentials: "same-origin"
-    })
+    window
+      .fetch("/forecasts", { ...CREDENTIALS })
       .then(res => res.json())
       .then(forecasts => {
         this.forecasts = this.forecasts.concat(forecasts);
       });
   },
   mounted: function() {
-    cityInput = document.getElementById("city");
-    cityInput.focus();
+    this.cityInput = document.getElementById("city");
+    if (window.innerWidth > 992) {
+      // only focus if "maybe" we're in a desktop sized browser
+      this.cityInput.focus();
+    }
   },
   computed: {
     descendingForecasts: function() {
       return Array.from(this.forecasts).reverse();
     },
     units: function() {
-      let degree_symbol = this.temperature_units != "kelvin" ? "°" : " ";
+      let degree_symbol = !this.kelvin ? "°" : " ";
       return degree_symbol + this.temperature_units.toUpperCase()[0];
+    },
+    celsius: function() {
+      return this.temperature_units === "celsius";
+    },
+    fahrenheit: function() {
+      return this.temperature_units === "fahrenheit";
+    },
+    kelvin: function() {
+      return this.temperature_units === "kelvin";
+    }
+  },
+  watch: {
+    temperature_units: function(newUnits) {
+      window.localStorage.setItem("temperature_units", newUnits);
     }
   },
   methods: {
@@ -59,6 +85,30 @@ var app = new Vue({
       }
       return t;
     },
+    getPredictions: async function() {
+      if (this.city) {
+        let city = this.city;
+        this.city = "";
+        this.cityInput.blur();
+
+        this.error = "";
+
+        let body = JSON.stringify({ city });
+
+        let { predictions, error } = await (await window.fetch("/cities", {
+          ...HEADERS,
+          ...CREDENTIALS,
+          ...POST,
+          body
+        })).json();
+
+        if (typeof error !== "undefined") {
+          this.error = error;
+        } else {
+          this.predictions = predictions;
+        }
+      }
+    },
     getForecast: async function(e) {
       this.forecasts.push({
         city: e.target.innerText,
@@ -68,65 +118,25 @@ var app = new Vue({
         created_at: Date.now()
       });
 
+      // This finds the index of the clicked button in the list group
       const whichCity = [...e.target.parentNode.children].indexOf(e.target);
 
-      Object.assign(FETCH_OPTIONS, {
-        method: "POST",
-        body: JSON.stringify({ prediction: this.cities[whichCity] })
-      });
+      let body = JSON.stringify({ prediction: this.predictions[whichCity] });
 
-      this.cities = []
+      this.predictions = [];
 
-      let place = await (await fetch("/coordinates", FETCH_OPTIONS)).json();
+      let { forecast, error } = await (await window.fetch("/forecasts", {
+        ...HEADERS,
+        ...CREDENTIALS,
+        ...POST,
+        body
+      })).json();
 
-      console.log(place);
-      Object.assign(FETCH_OPTIONS, {
-        method: "POST",
-        body: JSON.stringify({ place })
-      });
-
-      let forecast = await (await fetch("/forecasts", FETCH_OPTIONS)).json();
       this.forecasts.pop();
-      this.forecasts.push(forecast);
-    },
-    getCities: async function() {
-      if (this.city) {
-        let city = this.city;
-        this.city = "";
-        cityInput.blur();
-
-        Object.assign(FETCH_OPTIONS, {
-          method: "POST",
-          body: JSON.stringify({ city })
-        });
-
-        let { predictions } = await (await fetch(
-          "/cities",
-          FETCH_OPTIONS
-        )).json();
-
-        this.cities = predictions;
-
-        // console.log(place);
-        // Object.assign(FETCH_OPTIONS, {
-        //   method: "POST",
-        //   body: JSON.stringify({ place })
-        // });
-
-        // let forecast = await (await fetch("/forecasts", FETCH_OPTIONS)).json();
-
-        // console.log(forecast);
-        // .then(res => res.json())
-        // .then(data => {
-        //   this.forecasts.pop();
-        //   if (!data.error) {
-        //     this.error = "";
-        //     this.forecasts.push(data);
-        //   } else {
-        //     this.error = data.error;
-        //     console.error(data.error);
-        //   }
-        // });
+      if (forecast) {
+        this.forecasts.push(forecast);
+      } else {
+        this.error = forecast.error;
       }
     }
   },

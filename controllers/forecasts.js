@@ -2,50 +2,63 @@ const User = require(`${__dirname}/../models/User`);
 const Endpoint = require(`${__dirname}/../utilities/Endpoint`);
 const router = require("express").Router();
 
-async function getForecasts(req, res) {
-  let uuid = req.cookies.uuid;
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: !!process.env.NODE_ENV,
+  expires: new Date(Date.now() + 10 * 365 * 8.64e7)
+};
 
-  try {
-    let user = await new User(uuid).init();
-    if (typeof user.id === "undefined") console.log("it doesnot exist");
-    if (user.id) {
-      res.cookie("uuid", user.uuid, {
-        httpOnly: true,
-        secure: !!process.env.NODE_ENV,
-        expires: new Date(Date.now() + 10 * 365 * 8.64e7)
-      });
+async function getForecasts(req, res) {
+  let result = [];
+  let { uuid } = req.cookies;
+
+  if (uuid) {
+    let id = await User.id(uuid);
+    if (id) {
+      result = await User.forecasts(id);
     }
-    let forecasts = await user.forecasts();
-    res.json(forecasts);
-  } catch (e) {
-    return res.json({ error: "hellooooo" + e.message });
   }
+
+  return res.json(result);
 }
 
 async function postForecast(req, res) {
-  let uuid = req.cookies.uuid;
+  let result;
+  let { uuid } = req.cookies;
+  let prediction = req.body.prediction;
 
-  let place = req.body.place;
-  // a place should look like
-  // {
-  //   city: "Sakarya, Turkey",
-  //   location: { lat: 49.848471, lng: -99.9500904 }
-  // }
-  let user = await new User(uuid).init();
+  if (prediction) {
+    let place = await Endpoint.placesDetails(prediction);
 
-  try {
-    let forecast = await Endpoint.forecast(place);
+    if (place instanceof Error) {
+      result = { error: place.message };
+    } else {
+      let forecast = await Endpoint.forecast(place);
 
-    let id = await user.addForecast(forecast);
+      if (forecast instanceof Error) {
+        result = { error: forecast.message };
+      } else {
+        let id = await User.id(uuid);
 
-    return res.json(forecast);
-  } catch (e) {
-    return res.json({ error: e.message });
+        if (id) {
+          await User.addForecast(id, forecast);
+        } else {
+          let user = await User.create();
+          await User.addForecast(user.id, forecast);
+          res.cookie("uuid", user.uuid, COOKIE_OPTIONS);
+        }
+
+        result = { forecast };
+      }
+    }
+  } else {
+    result = { error: "You must choose a suggested city." };
   }
+  return res.json(result);
 }
 
-// request handling for /forecast
+// request handling for /forecasts
 router.get("/", getForecasts);
 router.post("/", postForecast);
 
-module.exports = { router, getForecasts, postForecast };
+module.exports = { router, getForecasts, postForecast, User };
