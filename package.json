@@ -6,14 +6,10 @@
   "scripts": {
     "test": "npm run clean && jest",
     "start": "nodemon app.js",
-    "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run",
-    "rollback": "knex migrate:rollback",
-    "postinstall": "knex migrate:latest"
+    "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run"
   },
   "jest": {
-    "roots": [
-      "tests"
-    ]
+    "roots": ["tests"]
   },
   "engines": {
     "node": "9.x"
