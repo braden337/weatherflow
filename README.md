@@ -5,5 +5,5 @@ A web app that fetches and stores weather forecasts. The server-side uses
 
 ### Getting started
 
-1. Install development dependencies with `npm install`
+1. Install dependencies with `npm install`
 1. Run the test suite with `npm test`

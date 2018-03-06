@@ -7,12 +7,10 @@
     "test": "npm run clean && jest",
     "start": "nodemon app.js",
     "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run",
-    "build": "parcel build ./src/index.html --out-dir public --public-url / --no-minify"
+    "build": "parcel build ./src/index.html --out-dir public --public-url /"
   },
   "jest": {
-    "roots": [
-      "tests"
-    ]
+    "roots": ["tests"]
   },
   "engines": {
     "node": "9.x"
