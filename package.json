@@ -6,10 +6,13 @@
   "scripts": {
     "test": "npm run clean && jest",
     "start": "nodemon app.js",
-    "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run"
+    "clean": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+    "build": "parcel build ./src/index.html --out-dir public --public-url / --no-minify"
   },
   "jest": {
-    "roots": ["tests"]
+    "roots": [
+      "tests"
+    ]
   },
   "engines": {
     "node": "9.x"
@@ -33,8 +36,16 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "bootstrap": "^4.0.0",
     "jest": "^22.4.2",
+    "moment": "^2.21.0",
     "node-mocks-http": "^1.6.7",
-    "nodemon": "^1.17.1"
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.17.1",
+    "parcel-bundler": "^1.6.2",
+    "vue": "^2.5.13"
   }
 }

@@ -1,10 +1,11 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
 body {
-  background-color: var(--light);
+  background-color: $light;
 }
 
 header {
-  background-color: var(--red);
-  color: var(--light);
+  background-color: $red;
+  color: $light;
 }
 
 .num-col {
@@ -21,17 +22,6 @@ header {
   vertical-align: middle;
 }
 
-/*@media (max-width: 768px) {
-  */
-
-/*  .ui-col+.ui-col {*/
-
-/*    margin-top: 1rem;*/
-
-/*  }*/
-
-/*}*/
-
 #city,
 #temperatureRadio>label {
   flex: 1;
@@ -42,4 +32,8 @@ header {
   text-overflow: ellipsis;
   overflow: hidden;
   display: block;
+}
+
+.hearts {
+  color: $red;
 }

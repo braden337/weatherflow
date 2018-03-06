@@ -1,3 +1,7 @@
+require("babel-polyfill");
+import moment from "moment";
+import Vue from "vue/dist/vue.esm.js";
+
 // Helper functions
 const roundHundredths = x => Math.round(x * 100) / 100;
 
