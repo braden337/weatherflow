@@ -10,4 +10,6 @@ A web app that fetches and stores weather forecasts. The server-side uses
     - Add your [Wunderground](https://www.wunderground.com/weather/api) API key
 1. Install dependencies with `npm install`
 1. Run the test suite with `npm test`
+1. Build client-side assets with `npm run build`
 1. Start the development server with `npm start`
+    - The app should be running at [localhost:3000](http://localhost:3000)
